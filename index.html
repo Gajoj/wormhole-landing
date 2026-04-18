@@ -6,7 +6,7 @@
   <title>Wormhole — Fall into Knowledge</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -26,7 +26,7 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Instrument Sans', sans-serif;
       overflow-x: hidden;
       min-height: 100vh;
     }
@@ -79,11 +79,18 @@
     }
 
     .logo-ring {
-      width: 100px;
-      height: 100px;
+      width: 120px;
+      height: 120px;
       margin: 0 auto 20px;
       position: relative;
-      animation: spinSlow 20s linear infinite;
+      animation: spinSlow 30s linear infinite;
+      filter: drop-shadow(0 0 24px rgba(168, 85, 247, 0.35));
+    }
+
+    .logo-ring img {
+      width: 100%;
+      height: 100%;
+      display: block;
     }
 
     .logo-ring svg {
@@ -97,8 +104,8 @@
     }
 
     .brand {
-      font-family: 'Syne', sans-serif;
-      font-size: 28px;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 26px;
       font-weight: 700;
       letter-spacing: -0.5px;
     }
@@ -117,11 +124,11 @@
     }
 
     .hero-headline {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(42px, 8vw, 88px);
-      font-weight: 800;
-      line-height: 1.0;
-      letter-spacing: -3px;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(44px, 8.5vw, 92px);
+      font-weight: 700;
+      line-height: 0.98;
+      letter-spacing: -3.5px;
       margin-bottom: 24px;
       animation: fadeUp 0.9s 0.2s ease both;
       opacity: 0;
@@ -130,6 +137,7 @@
     .hero-headline em {
       font-style: italic;
       color: var(--purple-light);
+      font-weight: 600;
     }
 
     .hero-sub {
@@ -159,7 +167,7 @@
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 16px 20px;
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Instrument Sans', sans-serif;
       font-size: 15px;
       color: var(--text);
       outline: none;
@@ -179,7 +187,7 @@
       border: none;
       border-radius: 14px;
       padding: 16px 28px;
-      font-family: 'Syne', sans-serif;
+      font-family: 'Instrument Sans', sans-serif;
       font-size: 14px;
       font-weight: 700;
       letter-spacing: 0.5px;
@@ -237,19 +245,24 @@
     }
 
     .avatars span {
-      width: 32px;
-      height: 32px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
       border: 2px solid var(--bg);
-      margin-left: -8px;
-      background: linear-gradient(135deg, var(--purple), var(--purple-light));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 12px;
+      margin-left: -10px;
+      background-image: url('assets/people.png');
+      background-size: 400% 100%;
+      background-repeat: no-repeat;
+      box-shadow: 0 0 0 1px rgba(168, 85, 247, 0.3);
     }
 
-    .avatars span:first-child { margin-left: 0; }
+    .avatars span:first-child {
+      margin-left: 0;
+      background-position: 0% 50%;
+    }
+    .avatars span:nth-child(2) { background-position: 33.33% 50%; }
+    .avatars span:nth-child(3) { background-position: 66.66% 50%; }
+    .avatars span:nth-child(4) { background-position: 100% 50%; }
 
     .social-text {
       font-size: 13px;
@@ -259,6 +272,73 @@
     .social-text strong {
       color: var(--text);
       font-weight: 500;
+    }
+
+    /* ─── COMPARISON ─── */
+    .comparison {
+      position: relative;
+      z-index: 1;
+      padding: 60px 24px 40px;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .comparison-intro {
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 700;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      margin-bottom: 12px;
+      max-width: 720px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .comparison-intro em {
+      font-style: italic;
+      color: var(--purple-light);
+      font-weight: 600;
+    }
+
+    .comparison-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 560px;
+      margin: 0 auto 48px;
+      line-height: 1.6;
+      font-weight: 400;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+
+    .comp-card {
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .comp-card:hover { transform: translateY(-4px); }
+
+    .comp-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 20px;
+    }
+
+    .comp-card.highlight {
+      box-shadow: 0 0 40px rgba(124, 58, 237, 0.25);
+    }
+
+    @media (max-width: 720px) {
+      .comparison-grid { grid-template-columns: 1fr; }
     }
 
     /* ─── FEATURES ─── */
@@ -281,13 +361,13 @@
     }
 
     .section-title {
-      font-family: 'Syne', sans-serif;
-      font-size: clamp(32px, 5vw, 52px);
-      font-weight: 800;
-      letter-spacing: -2px;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: clamp(32px, 5vw, 56px);
+      font-weight: 700;
+      letter-spacing: -2.5px;
       text-align: center;
       margin-bottom: 64px;
-      line-height: 1.1;
+      line-height: 1.05;
     }
 
     .section-title span { color: var(--purple-light); }
@@ -320,7 +400,7 @@
     }
 
     .feat-num {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Instrument Sans', sans-serif;
       font-size: 11px;
       letter-spacing: 2px;
       color: var(--purple-light);
@@ -330,11 +410,11 @@
     }
 
     .feat-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 20px;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 22px;
       font-weight: 700;
       margin-bottom: 10px;
-      letter-spacing: -0.5px;
+      letter-spacing: -0.7px;
     }
 
     .feat-desc {
@@ -388,7 +468,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Syne', sans-serif;
+      font-family: 'Instrument Sans', sans-serif;
       font-size: 16px;
       font-weight: 800;
       flex-shrink: 0;
@@ -397,11 +477,11 @@
 
     .step-content {}
     .step-title {
-      font-family: 'Syne', sans-serif;
-      font-size: 18px;
+      font-family: 'Instrument Sans', sans-serif;
+      font-size: 20px;
       font-weight: 700;
       margin-bottom: 6px;
-      letter-spacing: -0.3px;
+      letter-spacing: -0.5px;
     }
 
     .step-desc {
@@ -553,19 +633,7 @@
 
   <div class="logo-wrap">
     <div class="logo-ring">
-      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="rg1" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#a855f7"/>
-            <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.4"/>
-          </radialGradient>
-        </defs>
-        <circle cx="50" cy="50" r="44" stroke="url(#rg1)" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.6"/>
-        <circle cx="50" cy="50" r="36" stroke="#a855f7" stroke-width="2" stroke-dasharray="0"/>
-        <circle cx="50" cy="50" r="26" stroke="#7c3aed" stroke-width="1" opacity="0.7"/>
-        <circle cx="50" cy="50" r="14" fill="url(#rg1)" opacity="0.5"/>
-        <circle cx="50" cy="50" r="6" fill="#c084fc"/>
-      </svg>
+      <img src="assets/wormhole_icon.png" alt="Wormhole" />
     </div>
     <div class="brand">Worm<span>hole</span></div>
   </div>
@@ -591,9 +659,25 @@
 
   <div class="social-proof">
     <div class="avatars">
-      <span>🧠</span><span>🔭</span><span>📚</span><span>🌍</span>
+      <span></span><span></span><span></span><span></span>
     </div>
     <p class="social-text"><strong>Curious minds</strong> are already waiting</p>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="comparison">
+  <p class="section-label reveal">Your brain on Wormhole</p>
+  <h2 class="comparison-intro reveal">Most apps <em>box your curiosity in.</em><br>We let it run wild.</h2>
+  <p class="comparison-sub reveal">Your mind isn't a list of separate topics. It's a web. Wormhole respects that.</p>
+
+  <div class="comparison-grid">
+    <div class="comp-card reveal">
+      <img src="assets/onboarding2_box.png" alt="Others box you in"/>
+    </div>
+    <div class="comp-card highlight reveal">
+      <img src="assets/onboarding2_free.png" alt="Wormhole sets you free"/>
+    </div>
   </div>
 </section>
 
@@ -736,8 +820,7 @@
   reveals.forEach(el => observer.observe(el));
 
   // ─── FORM SUBMIT
-  // Replace YOUR_FORM_URL below with your Tally.so or Formspree endpoint
-  const FORM_ENDPOINT = 'YOUR_FORM_ENDPOINT_HERE';
+  const FORM_ENDPOINT = 'https://formspree.io/f/xeevkgea';
 
   async function handleSubmit(e, successId) {
     e.preventDefault();
@@ -749,11 +832,13 @@
     btn.disabled = true;
 
     try {
-      // If you have a real endpoint, use fetch:
-      // await fetch(FORM_ENDPOINT, { method: 'POST', body: JSON.stringify({ email }), headers: { 'Content-Type': 'application/json' } });
+      const res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ email })
+      });
 
-      // For now, simulate success:
-      await new Promise(r => setTimeout(r, 800));
+      if (!res.ok) throw new Error('Failed');
 
       form.style.display = 'none';
       document.getElementById(successId).classList.add('show');
