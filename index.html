@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wormhole — Fall into Knowledge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --purple: #7c3aed;
+      --purple-light: #a855f7;
+      --purple-glow: rgba(124, 58, 237, 0.4);
+      --bg: #09090f;
+      --bg2: #0d0d1a;
+      --text: #f0eeff;
+      --muted: #9090a8;
+      --border: rgba(124, 58, 237, 0.2);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ─── STARS ─── */
+    .stars {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      border-radius: 50%;
+      background: white;
+      animation: twinkle var(--dur) ease-in-out infinite;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: var(--min-op); transform: scale(1); }
+      50% { opacity: var(--max-op); transform: scale(1.3); }
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 24px 80px;
+      z-index: 1;
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.18) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      pointer-events: none;
+    }
+
+    .logo-wrap {
+      margin-bottom: 48px;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .logo-ring {
+      width: 100px;
+      height: 100px;
+      margin: 0 auto 20px;
+      position: relative;
+      animation: spinSlow 20s linear infinite;
+    }
+
+    .logo-ring svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    @keyframes spinSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .brand {
+      font-family: 'Syne', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+
+    .brand span { color: var(--purple-light); }
+
+    .hero-eyebrow {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      font-weight: 500;
+      margin-bottom: 20px;
+      animation: fadeUp 0.9s 0.1s ease both;
+      opacity: 0;
+    }
+
+    .hero-headline {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(42px, 8vw, 88px);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -3px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.9s 0.2s ease both;
+      opacity: 0;
+    }
+
+    .hero-headline em {
+      font-style: italic;
+      color: var(--purple-light);
+    }
+
+    .hero-sub {
+      font-size: clamp(16px, 2.5vw, 20px);
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-bottom: 48px;
+      font-weight: 300;
+      animation: fadeUp 0.9s 0.3s ease both;
+      opacity: 0;
+    }
+
+    /* ─── FORM ─── */
+    .waitlist-form {
+      display: flex;
+      gap: 12px;
+      max-width: 480px;
+      width: 100%;
+      animation: fadeUp 0.9s 0.4s ease both;
+      opacity: 0;
+    }
+
+    .waitlist-form input {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 20px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      backdrop-filter: blur(8px);
+    }
+
+    .waitlist-form input::placeholder { color: var(--muted); }
+
+    .waitlist-form input:focus {
+      border-color: var(--purple);
+      box-shadow: 0 0 0 3px var(--purple-glow);
+    }
+
+    .btn-join {
+      background: linear-gradient(135deg, var(--purple), var(--purple-light));
+      border: none;
+      border-radius: 14px;
+      padding: 16px 28px;
+      font-family: 'Syne', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: white;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      box-shadow: 0 4px 24px var(--purple-glow);
+    }
+
+    .btn-join:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px var(--purple-glow);
+    }
+
+    .btn-join:active { transform: translateY(0); }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 14px;
+      animation: fadeUp 0.9s 0.5s ease both;
+      opacity: 0;
+    }
+
+    .success-msg {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: rgba(124, 58, 237, 0.12);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 24px;
+      font-size: 15px;
+      color: var(--purple-light);
+      max-width: 480px;
+      width: 100%;
+      animation: fadeUp 0.4s ease both;
+    }
+
+    .success-msg.show { display: flex; }
+
+    /* ─── SOCIAL PROOF ─── */
+    .social-proof {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 40px;
+      animation: fadeUp 0.9s 0.6s ease both;
+      opacity: 0;
+    }
+
+    .avatars {
+      display: flex;
+    }
+
+    .avatars span {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      margin-left: -8px;
+      background: linear-gradient(135deg, var(--purple), var(--purple-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+    }
+
+    .avatars span:first-child { margin-left: 0; }
+
+    .social-text {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .social-text strong {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ─── FEATURES ─── */
+    .features {
+      position: relative;
+      z-index: 1;
+      padding: 80px 24px 100px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--purple-light);
+      font-weight: 500;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800;
+      letter-spacing: -2px;
+      text-align: center;
+      margin-bottom: 64px;
+      line-height: 1.1;
+    }
+
+    .section-title span { color: var(--purple-light); }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    .feat-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 32px 28px;
+      transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+      backdrop-filter: blur(8px);
+    }
+
+    .feat-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(124, 58, 237, 0.4);
+      box-shadow: 0 12px 40px rgba(124, 58, 237, 0.1);
+    }
+
+    .feat-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .feat-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--purple-light);
+      font-weight: 600;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .feat-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+
+    .feat-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    .how {
+      position: relative;
+      z-index: 1;
+      padding: 40px 24px 100px;
+      max-width: 780px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-top: 48px;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      left: 23px;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: linear-gradient(to bottom, var(--purple), transparent);
+    }
+
+    .step {
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+      padding: 0 0 40px 0;
+      text-align: left;
+    }
+
+    .step-dot {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--purple), var(--purple-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 16px;
+      font-weight: 800;
+      flex-shrink: 0;
+      box-shadow: 0 0 20px var(--purple-glow);
+    }
+
+    .step-content {}
+    .step-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: -0.3px;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+      font-weight: 300;
+    }
+
+    /* ─── BUILT FOR ─── */
+    .built-for {
+      position: relative;
+      z-index: 1;
+      padding: 40px 24px 100px;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .tags-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 40px;
+    }
+
+    .tag {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 10px 22px;
+      font-size: 14px;
+      color: var(--muted);
+      font-weight: 300;
+      transition: all 0.2s;
+    }
+
+    .tag:hover {
+      background: rgba(124, 58, 237, 0.1);
+      border-color: var(--purple);
+      color: var(--text);
+    }
+
+    /* ─── CTA BOTTOM ─── */
+    .cta-bottom {
+      position: relative;
+      z-index: 1;
+      padding: 40px 24px 120px;
+      text-align: center;
+    }
+
+    .cta-inner {
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(124, 58, 237, 0.07);
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 60px 40px;
+      backdrop-filter: blur(12px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-inner::before {
+      content: '';
+      position: absolute;
+      top: -40%;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(124, 58, 237, 0.2) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-bottom .hero-headline {
+      font-size: clamp(32px, 6vw, 56px);
+      animation: none;
+      opacity: 1;
+      margin-bottom: 16px;
+    }
+
+    .cta-bottom .hero-sub {
+      animation: none;
+      opacity: 1;
+      margin: 0 auto 36px;
+    }
+
+    .cta-bottom .waitlist-form {
+      margin: 0 auto;
+      animation: none;
+      opacity: 1;
+      justify-content: center;
+    }
+
+    .cta-bottom .form-note {
+      animation: none;
+      opacity: 1;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 32px 24px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    footer strong { color: var(--text); font-weight: 500; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ─── SCROLL REVEAL ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 560px) {
+      .waitlist-form { flex-direction: column; }
+      .btn-join { width: 100%; padding: 16px; }
+      .cta-inner { padding: 40px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- STARS -->
+<div class="stars" id="stars"></div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+
+  <div class="logo-wrap">
+    <div class="logo-ring">
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="rg1" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#a855f7"/>
+            <stop offset="100%" stop-color="#7c3aed" stop-opacity="0.4"/>
+          </radialGradient>
+        </defs>
+        <circle cx="50" cy="50" r="44" stroke="url(#rg1)" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.6"/>
+        <circle cx="50" cy="50" r="36" stroke="#a855f7" stroke-width="2" stroke-dasharray="0"/>
+        <circle cx="50" cy="50" r="26" stroke="#7c3aed" stroke-width="1" opacity="0.7"/>
+        <circle cx="50" cy="50" r="14" fill="url(#rg1)" opacity="0.5"/>
+        <circle cx="50" cy="50" r="6" fill="#c084fc"/>
+      </svg>
+    </div>
+    <div class="brand">Worm<span>hole</span></div>
+  </div>
+
+  <p class="hero-eyebrow">Coming Soon · Free Early Access</p>
+
+  <h1 class="hero-headline">
+    Fall into<br><em>knowledge.</em>
+  </h1>
+
+  <p class="hero-sub">
+    A personalized knowledge feed powered by AI. One fact leads to another, and another — until you've traveled somewhere you never expected.
+  </p>
+
+  <form class="waitlist-form" id="heroForm" onsubmit="handleSubmit(event, 'heroSuccess')">
+    <input type="email" placeholder="your@email.com" required autocomplete="email"/>
+    <button type="submit" class="btn-join">Join Waitlist →</button>
+  </form>
+  <div class="success-msg" id="heroSuccess">
+    <span>🌀</span> You're in! We'll reach out when Wormhole launches.
+  </div>
+  <p class="form-note">No spam. First access when we launch.</p>
+
+  <div class="social-proof">
+    <div class="avatars">
+      <span>🧠</span><span>🔭</span><span>📚</span><span>🌍</span>
+    </div>
+    <p class="social-text"><strong>Curious minds</strong> are already waiting</p>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features">
+  <p class="section-label reveal">What's inside</p>
+  <h2 class="section-title reveal">4 features.<br><span>One smarter you.</span></h2>
+
+  <div class="features-grid">
+    <div class="feat-card reveal">
+      <span class="feat-num">01</span>
+      <span class="feat-icon">📡</span>
+      <h3 class="feat-title">Your Feed</h3>
+      <p class="feat-desc">Pick your interests. Every post is curated for you — new facts every day from topics you actually care about.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-num">02</span>
+      <span class="feat-icon">🌀</span>
+      <h3 class="feat-title">Wormhole</h3>
+      <p class="feat-desc">Tap a keyword. Fall deeper. Each fact unlocks two paths. You choose. 5 steps, a new corner of the world.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-num">03</span>
+      <span class="feat-icon">🗺️</span>
+      <h3 class="feat-title">Your Journey</h3>
+      <p class="feat-desc">See where curiosity took you. Every wormhole session leaves a trail you can save and share.</p>
+    </div>
+    <div class="feat-card reveal">
+      <span class="feat-num">04</span>
+      <span class="feat-icon">🧠</span>
+      <h3 class="feat-title">Mind Map</h3>
+      <p class="feat-desc">Add topics from your journeys. Your knowledge universe grows with you. The more you explore, the richer the feed.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <p class="section-label reveal">How it works</p>
+  <h2 class="section-title reveal">One fact.<br><span>Then the one behind it.</span></h2>
+
+  <div class="steps">
+    <div class="step reveal">
+      <div class="step-dot">1</div>
+      <div class="step-content">
+        <h3 class="step-title">Read a lecture in your feed</h3>
+        <p class="step-desc">Curated around the topics you picked. New ones every day. 5 minutes is all it takes.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-dot">2</div>
+      <div class="step-content">
+        <h3 class="step-title">Tap "Enter Wormhole"</h3>
+        <p class="step-desc">Two keywords surface from the post. Pick one and fall deeper into the rabbit hole.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-dot">3</div>
+      <div class="step-content">
+        <h3 class="step-title">Follow the chain</h3>
+        <p class="step-desc">Each fact branches into 2 more paths. You navigate. 5 facts per session — you'll want more.</p>
+      </div>
+    </div>
+    <div class="step reveal">
+      <div class="step-dot">4</div>
+      <div class="step-content">
+        <h3 class="step-title">Grow your universe</h3>
+        <p class="step-desc">Add topics from your journeys. Your feed expands with your curiosity. No two feeds are the same.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BUILT FOR -->
+<section class="built-for">
+  <p class="section-label reveal">Who is it for</p>
+  <h2 class="section-title reveal">Built for people who<span>...</span></h2>
+  <div class="tags-wrap reveal">
+    <span class="tag">Have 47 browser tabs open. Just in case.</span>
+    <span class="tag">Still think about a random fact they learned last week</span>
+    <span class="tag">Want to be the smartest person in the room. Quietly.</span>
+    <span class="tag">Want to hold their own in any conversation</span>
+    <span class="tag">Are tired of saying "I didn't know that"</span>
+    <span class="tag">Learn new things every single day</span>
+    <span class="tag">Get lost in Wikipedia rabbit holes</span>
+    <span class="tag">Love connecting dots between unrelated ideas</span>
+  </div>
+</section>
+
+<!-- CTA BOTTOM -->
+<section class="cta-bottom">
+  <div class="cta-inner">
+    <h2 class="hero-headline">A smarter,<br>sharper you.<br><em>5 min a day.</em></h2>
+    <p class="hero-sub">Personalized general knowledge, powered by AI. Be first in line.</p>
+    <form class="waitlist-form" id="ctaForm" onsubmit="handleSubmit(event, 'ctaSuccess')" style="margin-bottom: 12px;">
+      <input type="email" placeholder="your@email.com" required autocomplete="email"/>
+      <button type="submit" class="btn-join">Get Early Access →</button>
+    </form>
+    <div class="success-msg" id="ctaSuccess">
+      <span>🌀</span> You're in! We'll reach out when Wormhole launches.
+    </div>
+    <p class="form-note">No spam. Unsubscribe anytime.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2025 <strong>Wormhole</strong> · A love letter to the endlessly curious.</p>
+</footer>
+
+<script>
+  // ─── STARS
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 160; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2 + 0.5;
+    const dur = (Math.random() * 4 + 3).toFixed(1);
+    const minOp = (Math.random() * 0.15 + 0.05).toFixed(2);
+    const maxOp = (Math.random() * 0.5 + 0.3).toFixed(2);
+    s.style.cssText = `
+      width:${size}px;height:${size}px;
+      top:${Math.random()*100}%;left:${Math.random()*100}%;
+      --dur:${dur}s;--min-op:${minOp};--max-op:${maxOp};
+      animation-delay:${(Math.random()*5).toFixed(1)}s;
+    `;
+    starsEl.appendChild(s);
+  }
+
+  // ─── SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ─── FORM SUBMIT
+  // Replace YOUR_FORM_URL below with your Tally.so or Formspree endpoint
+  const FORM_ENDPOINT = 'YOUR_FORM_ENDPOINT_HERE';
+
+  async function handleSubmit(e, successId) {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.querySelector('input[type="email"]').value;
+    const btn = form.querySelector('button');
+
+    btn.textContent = '...';
+    btn.disabled = true;
+
+    try {
+      // If you have a real endpoint, use fetch:
+      // await fetch(FORM_ENDPOINT, { method: 'POST', body: JSON.stringify({ email }), headers: { 'Content-Type': 'application/json' } });
+
+      // For now, simulate success:
+      await new Promise(r => setTimeout(r, 800));
+
+      form.style.display = 'none';
+      document.getElementById(successId).classList.add('show');
+    } catch {
+      btn.textContent = 'Try again';
+      btn.disabled = false;
+    }
+  }
+</script>
+</body>
+</html>
